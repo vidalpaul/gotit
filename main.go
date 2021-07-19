@@ -24,17 +24,20 @@ func main() {
 		go checkLink(l, c)
 	}
 
-	fmt.Println(<-c)
+	for i := 0; i < len(links); i++ {
+		fmt.Println(<-c)
+	}
+
 }
 
 func checkLink(l string, c chan string) {
 	_, e := http.Get(l)
 	if e != nil {
 		fmt.Println(l, "might be down.")
-		c <- "Might be down"
+		c <- "Hmm, it might be down"
 		return
 	}
 
 	fmt.Println(l, "is up.")
-	c <- "Is up"
+	c <- "Yep, it is up"
 }
